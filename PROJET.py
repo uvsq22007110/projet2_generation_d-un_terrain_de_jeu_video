@@ -26,11 +26,13 @@ def case_terre_eau():
     """definit les cases terre ou eau aléatoirement"""
 def voisin(T):
     """si la valeur du voisinage est supérieure ou égale à T, alors une case reste ou est convertie en eau et vice vers ca"""
+def grille():
+    
 #############################################
 #programme principal
 racine = tk.Tk()
-grillage = tk.Canvas(racine, bg = "white", width = WIDTH, height = HEIGHT)
-grillage.grid()
+grille = tk.Canvas(racine, bg = "white", width = WIDTH, height = HEIGHT)
+grille.grid()
 for i in range(50):
     for j in range(50):
         pos1x = i * (WIDTH/50)
@@ -38,9 +40,9 @@ for i in range(50):
         pos2x = (i + 1)*(WIDTH/50)
         pos2y = (j + 1)*(HEIGHT/50)
         if (((i + j) % 2) ==0):
-            case_terre = grillage.create_rectangle((pos1x, pos1y), (pos2x, pos2y), fill = "brown")
+            case_terre = grille.create_rectangle((pos1x, pos1y), (pos2x, pos2y), fill = "brown")
         else:
-            case_eau = grillage.create_rectangle((pos1x, pos1y), (pos2x, pos2y), fill = "blue")
+            case_eau = grille.create_rectangle((pos1x, pos1y), (pos2x, pos2y), fill = "blue")
     pass
 
 racine.mainloop()
