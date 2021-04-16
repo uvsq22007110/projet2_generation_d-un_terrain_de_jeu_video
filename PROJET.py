@@ -48,8 +48,38 @@ def voisin(T):
     """si la valeur du voisinage est supérieure ou égale à T, alors une case reste ou est convertie en eau et vice vers ca"""
     pass
 
-def personnage():
- """le personnage sera représenté sous forme de cercle"""
+def personnage_deplacement():
+ """le personnage sera représenté sous forme de cercle, déplacement du personnage""" 
+    pass
+def personnage_placement():
+    """retire et replace le personnage"""
+    pass
+
+def valeur_voisinage(k):
+    """définit la valeur du voisinage"""
+    pass
+
+def choix_parametres():
+    """l'utilisateur choisit les paramètres, k, p, n, T"""
+    pass
+
+def choix_taille():
+    """l'utilisateur choisit la taille de la grille"""
+    pass
+
+def annuler_deplacement():
+    """annule le déplacement du personnage"""
+    pass
+
+def sauvegarde():
+    """sauvegarde le terrain généré"""
+    pass
+
+def recharge():
+    """recharge un nouveau terrain"""
+    pass
+
+
 
 #############################################
 #programme principal
