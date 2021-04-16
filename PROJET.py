@@ -48,6 +48,8 @@ def voisin(T):
     """si la valeur du voisinage est supérieure ou égale à T, alors une case reste ou est convertie en eau et vice vers ca"""
     pass
 
+def personnage():
+ """le personnage sera représenté sous forme de cercle"""
 
 #############################################
 #programme principal
