@@ -49,7 +49,7 @@ def voisin(T):
     pass
 
 def personnage_deplacement():
- """le personnage sera représenté sous forme de cercle, déplacement du personnage""" 
+    """le personnage sera représenté sous forme de cercle, déplacement du personnage""" 
     pass
 def personnage_placement():
     """retire et replace le personnage"""
