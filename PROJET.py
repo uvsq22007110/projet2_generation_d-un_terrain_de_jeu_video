@@ -53,10 +53,10 @@ def cercle(event):
     x, y = WIDTH // 2, HEIGHT // 2
     dx, dy = 3, 5
     rayon = 10
-    cercle = grillage.create_oval((x-rayon, y-rayon),
-                                (x+rayon, y+rayon),
+    cercle = grillage.create_oval((event.x-rayon, event.y-rayon),
+                                (event.x+rayon, event.y+rayon),
                                 fill="yellow")
-    return [cercle, dx, dy]
+   
 
 def personnage_deplacement():
     """le personnage sera représenté sous forme de cercle, déplacement du personnage""" 
