@@ -50,8 +50,7 @@ def voisin(T):
 
 def cercle(event):
     """Dessine un rond jaune"""
-    x, y = WIDTH // 2, HEIGHT // 2
-    dx, dy = 3, 5
+    
     rayon = 10
     cercle = grillage.create_oval((event.x-rayon, event.y-rayon),
                                 (event.x+rayon, event.y+rayon),
