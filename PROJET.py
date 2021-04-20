@@ -48,6 +48,16 @@ def voisin(T):
     """si la valeur du voisinage est supérieure ou égale à T, alors une case reste ou est convertie en eau et vice vers ca"""
     pass
 
+def cercle(event):
+    """Dessine un rond jaune"""
+    x, y = WIDTH // 2, HEIGHT // 2
+    dx, dy = 3, 5
+    rayon = 10
+    cercle = grillage.create_oval((x-rayon, y-rayon),
+                                (x+rayon, y+rayon),
+                                fill="yellow")
+    return [cercle, dx, dy]
+
 def personnage_deplacement():
     """le personnage sera représenté sous forme de cercle, déplacement du personnage""" 
     pass
@@ -86,6 +96,7 @@ def recharge():
 racine = tk.Tk()
 grillage = tk.Canvas(racine, bg = "white", width = WIDTH, height = HEIGHT)
 grillage.grid()
+grillage.bind("<Button-1>", cercle)
 grille()
 racine.mainloop()
 #############################################
