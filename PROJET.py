@@ -9,6 +9,7 @@
 # https://github.com/uvsq22007110/projet2_generation_d-un_terrain_de_jeu_video
 #############################################
 import tkinter as tk
+import random as rd
 #############################################
 #definition des constantes(M)
 p = 0.5
@@ -32,16 +33,17 @@ def grille():
             pos1y = j * (HEIGHT/50)
             pos2x = (i + 1)*(WIDTH/50)
             pos2y = (j + 1)*(HEIGHT/50)
+            nombre_eau=2500*p
+            nombre_terre=2500-nombre_eau
+            Lbleu=["blue"]*int(nombre_eau)
+            Lbrown=["brown"]*int(nombre_terre)
+            Lcolors=Lbleu+Lbrown
+            colors=rd.choice(Lcolors)
+            Lcolors.remove(colors) #le remove ne marche pas mais la couleur marche bien 
             if (((i + j) % 2) ==0):
-                case_terre = grillage.create_rectangle((pos1x, pos1y), (pos2x, pos2y), fill = "brown")
+                case_terre = grillage.create_rectangle((pos1x, pos1y), (pos2x, pos2y), fill = colors)
             else:
-                case_eau = grillage.create_rectangle((pos1x, pos1y), (pos2x, pos2y), fill = "blue")
-    pass
-
-
-def case_terre_eau():
-    """definit les cases terre ou eau aléatoirement"""
-    pass
+                case_eau = grillage.create_rectangle((pos1x, pos1y), (pos2x, pos2y), fill = colors)
 
 
 def voisin(T):
