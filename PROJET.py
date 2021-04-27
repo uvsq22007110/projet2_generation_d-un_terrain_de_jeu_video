@@ -18,6 +18,7 @@ T = 5
 k = 1
 HEIGHT = 800
 WIDTH = 800
+cpt = 0
 
 #############################################
 #definition des variables globales
@@ -52,11 +53,15 @@ def voisin(T):
 
 def cercle(event):
     """Dessine un rond jaune"""
-    
+    global cpt
     rayon = 5
-    cercle = grillage.create_oval((event.x-rayon, event.y-rayon),
+    cpt +=1
+    if cpt ==1:
+        cercle = grillage.create_oval((event.x-rayon, event.y-rayon),
                                 (event.x+rayon, event.y+rayon),
                                 fill="yellow")
+    else:
+        pass
    
 
 def personnage_deplacement():
