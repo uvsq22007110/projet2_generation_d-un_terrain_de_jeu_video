@@ -66,6 +66,15 @@ def cercle(event):
     else:
         pass
    
+def droite(event):
+    grillage.move(cercle, 1, 0)
+def gauche(event):
+    grillage.move(cercle, -1, 0)
+def haut(event):
+    grillage.move(cercle, 0, -1)
+def bas(event):
+    grillage.move(cercle, 0, 1)
+
 
 def personnage_deplacement():
     """le personnage sera représenté sous forme de cercle, déplacement du personnage""" 
@@ -110,10 +119,10 @@ Taille.grid(row=0, column=1)
 grillage = tk.Canvas(racine, bg = "white", width = WIDTH, height = HEIGHT)
 grillage.grid(row=0, column=0)
 grillage.bind("<Button-1>", cercle)
-# grillage.bind("<Up>", haut)
-# grillage.bind("<Down>", bas)
-# grillage.bind("<Left>", gauche)
-# grillage.bind("<Right>", droite)
+grillage.bind("<Up>", haut)
+grillage.bind("<Down>", bas)
+grillage.bind("<Left>", gauche)
+grillage.bind("<Right>", droite)
 grille(p)
 b=grillage.find_all()
 racine.mainloop()
