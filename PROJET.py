@@ -40,7 +40,7 @@ def grille(cases):
             case = grillage.create_rectangle((pos1x, pos1y), (pos2x, pos2y), fill = colors)
 
 
-def coulour_gille(p) :
+def coulour_gille (p) :
     """ crée une list de 2500 elements remplit de blue et brown pour générer notre terrain """
     nombre_eau=2500*p
     nombre_terre=2500-nombre_eau
