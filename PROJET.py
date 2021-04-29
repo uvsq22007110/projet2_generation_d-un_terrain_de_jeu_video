@@ -26,26 +26,28 @@ cpt = 0
 #definition des fonctions
 
 
-def grille():
+def grille(cases):
     """génération de la grille"""
+    CG=coulour_gille(cases)
     for i in range(50):
         for j in range(50):
             pos1x = i * (WIDTH/50)            
             pos1y = j * (HEIGHT/50)
             pos2x = (i + 1)*(WIDTH/50)
             pos2y = (j + 1)*(HEIGHT/50)
-            nombre_eau=2500*p
-            nombre_terre=2500-nombre_eau
-            Lbleu=["blue"]*int(nombre_eau)
-            Lbrown=["brown"]*int(nombre_terre)
-            Lcolors=Lbleu+Lbrown
-            colors=rd.choice(Lcolors)
-            Lcolors.remove(colors) #le remove ne marche pas mais la couleur marche bien 
-            if (((i + j) % 2) ==0):
-                case_terre = grillage.create_rectangle((pos1x, pos1y), (pos2x, pos2y), fill = colors)
-            else:
-                case_eau = grillage.create_rectangle((pos1x, pos1y), (pos2x, pos2y), fill = colors)
+            colors=rd.choice(CG)
+            CG.remove(colors) 
+            case = grillage.create_rectangle((pos1x, pos1y), (pos2x, pos2y), fill = colors)
 
+
+def coulour_gille(p) :
+    """ crée une list de 2500 elements remplit de blue et brown pour générer notre terrain """
+    nombre_eau=2500*p
+    nombre_terre=2500-nombre_eau
+    Lbleu=["blue"]*int(nombre_eau)
+    Lbrown=["brown"]*int(nombre_terre)
+    Lcolors=Lbleu+Lbrown
+    return Lcolors
 
 def voisin(T):
     """si la valeur du voisinage est supérieure ou égale à T, alors une case reste ou est convertie en eau et vice vers ca"""
@@ -103,10 +105,11 @@ racine = tk.Tk()
 grillage = tk.Canvas(racine, bg = "white", width = WIDTH, height = HEIGHT)
 grillage.grid()
 grillage.bind("<Button-1>", cercle)
-grillage.bind("<Up>", haut)
-grillage.bind("<Down>", bas)
-grillage.bind("<Left>", gauche)
-grillage.bind("<Right>", droite)
-grille()
+#grillage.bind("<Up>", haut)
+#grillage.bind("<Down>", bas)
+#grillage.bind("<Left>", gauche)
+#grillage.bind("<Right>", droite)
+grille(p)
+b=grillage.find_all()
 racine.mainloop()
 #############################################
