@@ -54,26 +54,30 @@ def voisin(T):
     """si la valeur du voisinage est supérieure ou égale à T, alors une case reste ou est convertie en eau et vice vers ca"""
     pass
 
-def cercle(event):
+def creerCercle(event):
     """Dessine un rond jaune"""
     global cpt
+    global cercle
     rayon = 5
     cpt +=1
     if cpt ==1:
-        cercle = grillage.create_oval((event.x-rayon, event.y-rayon),
-                                (event.x+rayon, event.y+rayon),
+        x = (event.x//(WIDTH/nb_cases))*(WIDTH/nb_cases) + (WIDTH/nb_cases)/2
+        y = (event.y//(HEIGHT/nb_cases))*(HEIGHT/nb_cases) + (HEIGHT/nb_cases)/2
+        cercle = grillage.create_oval((x-rayon, y-rayon),
+                                (x+rayon, y+rayon),
                                 fill="yellow")
     else:
         pass
    
+"""faire les déplacement du cercle"""   
 def droite(event):
-    grillage.move(cercle, 1, 0)
+    grillage.move(cercle, WIDTH/nb_cases, 0)
 def gauche(event):
-    grillage.move(cercle, -1, 0)
+    grillage.move(cercle, -WIDTH/nb_cases, 0)
 def haut(event):
-    grillage.move(cercle, 0, -1)
+    grillage.move(cercle, 0, -HEIGHT/nb_cases)
 def bas(event):
-    grillage.move(cercle, 0, 1)
+    grillage.move(cercle, 0, HEIGHT/nb_cases)
 
 
 def personnage_deplacement():
@@ -118,11 +122,12 @@ Taille = tk.Button(racine, text="Taille de la grille", bd=10, bg="grey", fg="bla
 Taille.grid(row=0, column=1)
 grillage = tk.Canvas(racine, bg = "white", width = WIDTH, height = HEIGHT)
 grillage.grid(row=0, column=0)
-grillage.bind("<Button-1>", cercle)
+grillage.bind("<1>", creerCercle)
 grillage.bind("<Up>", haut)
 grillage.bind("<Down>", bas)
 grillage.bind("<Left>", gauche)
 grillage.bind("<Right>", droite)
+grillage.focus_set()
 grille(p)
 b=grillage.find_all()
 racine.mainloop()
