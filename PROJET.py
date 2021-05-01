@@ -100,12 +100,12 @@ def bas(event):
         grillage.move(cercle, 0, HEIGHT/nb_cases)
         CurrentPosition[1]+=1  
 
-###def retirer_cercle():
-    ###"global cercle
-    ###grillage.delete(cercle)
-
-###def placer_cercle():
-#### pass
+def retirer_cercle():
+    global cercle
+    global cpt 
+    cpt = 0
+    grillage.delete(cercle)
+    
 
 def valeur_voisinage(k):
     """définit la valeur du voisinage"""
@@ -141,7 +141,7 @@ racine = tk.Tk()
 Taille = tk.Button(racine, text="Taille de la grille", bd=10, bg="grey", fg="black", activeforeground="white", activebackground="red", command=choix_taille, padx=10, pady=10, relief="groove")
 Taille.grid(row=0, column=1)
 grillage = tk.Canvas(racine, bg = "white", width = WIDTH, height = HEIGHT)
-grillage.grid(row=0, column=0, rowspan=3)
+grillage.grid(row=0, column=0, rowspan=2)
 grillage.bind("<1>", creerCercle)
 grillage.bind("<Up>", haut)
 grillage.bind("<Down>", bas)
@@ -150,9 +150,7 @@ grillage.bind("<Right>", droite)
 grillage.focus_set()
 grille(p)
 b=grillage.find_all()
-Boutton_retirer = tk.Button(racine, text="Retirer personnage",bd=10, bg="grey",activeforeground="white", activebackground="red", padx=10, pady=10, relief="groove")
+Boutton_retirer = tk.Button(racine, text="Retirer personnage",bd=10, bg="grey",activeforeground="white", activebackground="red", command=retirer_cercle, padx=10, pady=10, relief="groove")
 Boutton_retirer.grid(row=1, column=1)
-Boutton_replacer = tk.Button(racine, text="Placer personnage",bd=10, bg="grey",activeforeground="white", activebackground="red", padx=10, pady=10, relief="groove")
-Boutton_replacer.grid(row=2, column=1)
 racine.mainloop()
 #############################################
