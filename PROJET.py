@@ -29,7 +29,6 @@ CurrentPosition = None
 #############################################
 #definition des fonctions
 
-
 def grille(cases):
     """génération de la grille"""
     CG=coulour_gille(cases)
@@ -60,9 +59,7 @@ def voisin(T):
 
 def creerCercle(event):
     """Dessine un rond jaune"""
-    global cpt
-    global cercle
-    global CurrentPosition
+    global cpt, cercle, CurrentPosition
     rayon = 5
     cpt +=1
     if cpt ==1:
@@ -71,10 +68,7 @@ def creerCercle(event):
         CurrentPosition = [int(event.x//(WIDTH/nb_cases)),int(event.y//(HEIGHT/nb_cases))]
         cercle = grillage.create_oval((x-rayon, y-rayon),
                                 (x+rayon, y+rayon),
-                                fill="yellow")
-    else:
-        pass
-   
+                                fill="yellow"
  
 def droite(event):
     """faire déplacer le cercle à droite sans aller dans la casse eau"""  
@@ -101,8 +95,7 @@ def bas(event):
         CurrentPosition[1]+=1  
 
 def retirer_cercle():
-    global cercle
-    global cpt 
+    global cercle, cpt 
     cpt = 0
     grillage.delete(cercle)
     
@@ -132,7 +125,6 @@ def sauvegarde():
 def recharge():
     """recharge un nouveau terrain"""
     pass
-
 
 
 #############################################
