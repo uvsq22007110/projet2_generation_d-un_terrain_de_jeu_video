@@ -9,12 +9,15 @@
 # https://github.com/uvsq22007110/projet2_generation_d-un_terrain_de_jeu_video
 #############################################
 import tkinter as tk
+from tkinter import simpledialog
+from tkinter import filedialog
 import random as rd
+import json
 #############################################
 #definition des constantes(M)
 p = 0.5
 n = 4
-T = 5
+T = 4
 k = 1
 HEIGHT = 800
 WIDTH = 800
@@ -23,6 +26,7 @@ cpt = 0
 cercle = None
 GrilleTotal = [[0 for x in range(nb_cases)] for y in range(nb_cases)]
 CurrentPosition = None
+deplacements=[]
 
 #############################################
 #definition des variables globales
@@ -53,6 +57,18 @@ def coulour_gille (p) :
     Lcolors=Lbleu+Lbrown
     return Lcolors
 
+def generation_suivante():
+    """si la valeur du voisinage est supérieur ou égale à T, alors une case reste ou est convertie en eau vice et versa"""
+    global GrilleTotal, k, T, p 
+    for x in range(len(GrilleTotal)):
+        for y in range(len(GrilleTotal)):
+            if valeur_voisinage(GrilleTotal) >= T:
+                GrilleTotal[x][y]="blue"
+            else:
+                GrilleTotal[x][y]="brown"
+    affiche_grille()
+
+
 def voisin(T):
     """si la valeur du voisinage est supérieure ou égale à T, alors une case reste ou est convertie en eau et vice vers ca"""
     pass
@@ -61,16 +77,15 @@ def creerCercle(event):
     """Dessine un rond jaune"""
     global cpt, cercle, CurrentPosition
     rayon = 5
-    cpt +=1
-    if cpt ==1:
+    if cpt ==0:
         x = (event.x//(WIDTH/nb_cases))*(WIDTH/nb_cases) + (WIDTH/nb_cases)/2
         y = (event.y//(HEIGHT/nb_cases))*(HEIGHT/nb_cases) + (HEIGHT/nb_cases)/2
         CurrentPosition = [int(event.x//(WIDTH/nb_cases)),int(event.y//(HEIGHT/nb_cases))]
         cercle = grillage.create_oval((x-rayon, y-rayon),
                                 (x+rayon, y+rayon),
-                                fill="yellow"
- 
-def droite(event):
+                                fill="yellow")
+                               
+def droite(event): 
     """faire déplacer le cercle à droite sans aller dans la casse eau"""  
     if CurrentPosition[0]+1<nb_cases and GrilleTotal[CurrentPosition[0]+1][CurrentPosition[1]] == 'brown' :
         grillage.move(cercle, WIDTH/nb_cases, 0)
@@ -102,7 +117,12 @@ def retirer_cercle():
 
 def valeur_voisinage(k):
     """définit la valeur du voisinage"""
-    pass
+    eau = 0
+    for i in range(-k, k+1):
+        for j in range(-k, k+1):
+            if ((i != 0 or j != 0) and x+i >=0 and x+i< len(grille) and y+j >= 0 and y+j < len(grille) and grille[x+i][y+j]=="blue"):
+                eau = eau + 1 
+    return eau
 
 def choix_parametres():
     """l'utilisateur choisit les paramètres, k, p, n, T"""
@@ -116,24 +136,55 @@ def choix_taille():
 
 def annuler_deplacement():
     """annule le déplacement du personnage"""
-    pass
+    global deplacements
+    if cpt == 1 and len(deplacements)>0:
+        f= deplacements.pop()
+        f(None)
 
 def sauvegarde():
     """sauvegarde le terrain généré"""
-    pass
+    f = tk.filedialop.asksaveasfile()
+    json.dump([CurrentPosition, GrilleTota], f)
+    f.close()
 
 def recharge():
     """recharge un nouveau terrain"""
-    pass
+    global CurrentPosition, GrilleTotal, nb_cases
+    f = tk.filedialog.askopenfile()
+    r = json.load(f)
+    CurrentPosition = r[0]
+    GrilleTotal = r[1]
+    nb_cases = len(GrilleTotal)
+    f.close()
+    affiche_grille()
+
+def changerP():
+    global p 
+    p = simpledialog.askfloat("Input", "Paramètre p:")
+    grille(p)
+
+def changerN():
+    global n 
+    n = simpledialog.askinteger("Input", "Paramètre n:")
+    grille(p)
+
+def changerT():
+    global T
+    T = simpledialog.askinteger("Input", "Paramètre T:")
+    grille(p)
+
+def changerK():
+    global k
+    k = simpledialog.askinteger("Input", "Paramètre k:")
+    grille(p)
 
 
 #############################################
 #programme principal
 racine = tk.Tk()
-Taille = tk.Button(racine, text="Taille de la grille", bd=10, bg="grey", fg="black", activeforeground="white", activebackground="red", command=choix_taille, padx=10, pady=10, relief="groove")
-Taille.grid(row=0, column=1)
+
 grillage = tk.Canvas(racine, bg = "white", width = WIDTH, height = HEIGHT)
-grillage.grid(row=0, column=0, rowspan=2)
+grillage.grid(row=0, column=0, rowspan=30)
 grillage.bind("<1>", creerCercle)
 grillage.bind("<Up>", haut)
 grillage.bind("<Down>", bas)
@@ -142,7 +193,36 @@ grillage.bind("<Right>", droite)
 grillage.focus_set()
 grille(p)
 b=grillage.find_all()
-Boutton_retirer = tk.Button(racine, text="Retirer personnage",bd=10, bg="grey",activeforeground="white", activebackground="red", command=retirer_cercle, padx=10, pady=10, relief="groove")
-Boutton_retirer.grid(row=1, column=1)
+
+bouton_gen_suivante = tk.Button(racine, text="Génération suivante", command=generation_suivante)
+bouton_gen_suivante.grid(row=0, column=1)
+
+Taille = tk.Button(racine, text="Taille de la grille", command=choix_taille)
+Taille.grid(row=1, column=1)
+
+Button_retirer= tk.Button(racine, text="Retirer personnage", command=retirer_cercle)
+Button_retirer.grid(row=2, column=1)
+
+bouton_p = tk.Button(racine, text="Changer p", command=changerP)
+bouton_p.grid(row=0, column=2)
+
+bouton_n = tk.Button(racine, text="Changer n", command= changerN)
+bouton_n.grid(row=1, column=2)
+
+bouton_t = tk.Button(racine, text="Changer t", command = changerT)
+bouton_t.grid(row=2, column=2)
+
+bouton_k = tk.Button(racine, text="Changer k", command= changerK)
+bouton_k.grid(row=3, column=2)
+
+bouton_sauvegarder = tk.Button(racine, text="Sauvegarder", command = sauvegarde)
+bouton_sauvegarder.grid(row=0, column=3)
+
+bouton_charger = tk.Button(racine, text="Charger", command=recharge)
+bouton_charger.grid(row=1, column=3)
+
+bouton_retour = tk.Button(racine, text="Retour", command=annuler_deplacement)
+bouton_retour.grid(row=2, column=3)
+
 racine.mainloop()
 #############################################
