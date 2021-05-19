@@ -17,7 +17,7 @@ import json
 #definition des constantes(M)
 p = 0.5
 n = 4
-T = 4
+T = 5
 k = 1
 HEIGHT = 800
 WIDTH = 800
@@ -75,45 +75,50 @@ def voisin(T):
 
 def creerCercle(event):
     """Dessine un rond jaune"""
-    global cpt, cercle, CurrentPosition
+    global cpt
+    global cercle
+    global CurrentPosition
     rayon = 5
     if cpt ==0:
         x = (event.x//(WIDTH/nb_cases))*(WIDTH/nb_cases) + (WIDTH/nb_cases)/2
         y = (event.y//(HEIGHT/nb_cases))*(HEIGHT/nb_cases) + (HEIGHT/nb_cases)/2
-        CurrentPosition = [int(event.x//(WIDTH/nb_cases)),int(event.y//(HEIGHT/nb_cases))]
-        cercle = grillage.create_oval((x-rayon, y-rayon),
-                                (x+rayon, y+rayon),
-                                fill="yellow")
+        CurrentPosition = [int(event.x//(WIDTH/nb_cases)), int(event.y//(HEIGHT/nb_cases))]
+        if GrilleTotal[CurrentPosition[0]][CurrentPosition[1]]!="blue": 
+            cercle = grillage.create_oval((x-rayon, y-rayon), (x+rayon, y+rayon), fill="yellow")
+            cpt+=1
+    else:
+        pass
                                
-def droite(event): 
-    """faire déplacer le cercle à droite sans aller dans la casse eau"""  
+def droite(event):
+    """faire déplacer le cercle à droite sans aller dans la casse eau""" 
     if CurrentPosition[0]+1<nb_cases and GrilleTotal[CurrentPosition[0]+1][CurrentPosition[1]] == 'brown' :
         grillage.move(cercle, WIDTH/nb_cases, 0)
         CurrentPosition[0]+=1
 
 def gauche(event):
-    """faire déplacer le cercle à gauche sans aller dans la casse eau"""
+    """faire déplacer le cercle à gauche sans aller dans la casse eau""" 
     if CurrentPosition[0]-1>=0 and GrilleTotal[CurrentPosition[0]-1][CurrentPosition[1]] == 'brown' :
         grillage.move(cercle, -WIDTH/nb_cases, 0)
         CurrentPosition[0]-=1
 
 def haut(event):
-    """faire déplacer le cercle en haut sans aller dans la casse eau"""
+    """faire déplacer le cercle en haut sans aller dans la casse eau""" 
     if CurrentPosition[1]-1>=0 and GrilleTotal[CurrentPosition[0]][CurrentPosition[1]-1] == 'brown' :
         grillage.move(cercle, 0, -HEIGHT/nb_cases)
         CurrentPosition[1]-=1
 
 def bas(event):
-    """faire déplacer le cercle en bas sans aller dans la casse eau"""
+    """faire déplacer le cercle en bas sans aller dans la casse eau""" 
     if CurrentPosition[1]+1<nb_cases and GrilleTotal[CurrentPosition[0]][CurrentPosition[1]+1] == 'brown' :
         grillage.move(cercle, 0, HEIGHT/nb_cases)
         CurrentPosition[1]+=1  
 
 def retirer_cercle():
+    " fonction qui permet de retirer le cercle et lorqu'on clique sur une autre case terre le cercle se replace"
     global cercle, cpt 
     cpt = 0
     grillage.delete(cercle)
-    
+       
 
 def valeur_voisinage(k):
     """définit la valeur du voisinage"""
