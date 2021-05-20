@@ -4,7 +4,7 @@
 # Fatima AIT IGHIL 
 # Cecile FETRE
 # Charoline JOSEPH
-# Aexis BRIAND
+# Alexis BRIAND
 # Mecipssa HESNI
 # https://github.com/uvsq22007110/projet2_generation_d-un_terrain_de_jeu_video
 #############################################
@@ -24,7 +24,6 @@ WIDTH = 800
 nb_cases = 50
 cpt = 0
 cercle = None
-GrilleTotal = [[0 for x in range(nb_cases)] for y in range(nb_cases)]
 CurrentPosition = None
 deplacements=[]
 
@@ -35,6 +34,7 @@ deplacements=[]
 
 def grille(cases):
     """génération de la grille"""
+    GrilleTotal = [[0 for x in range(nb_cases)] for y in range(nb_cases)]
     CG=coulour_gille(cases)
     for i in range(nb_cases):
         for j in range(nb_cases):
@@ -131,13 +131,50 @@ def valeur_voisinage(k):
 
 def choix_parametres():
     """l'utilisateur choisit les paramètres, k, p, n, T"""
-    pass
+    global k, n, p, T
+    fenetre1 = tk.Tk()
+    label1 = tk.Label(fenetre1, text="Paramètre p (la probabilité d'avoir une case eau)").grid()
+    Param1 = tk.Entry(fenetre1)
+    Param1.insert(0,p)
+    Param1.grid()
+    label2 = tk.Label(fenetre1, text="Paramètre n (le nombre de fois où on répète l'automate)").grid()
+    Param2 = tk.Entry(fenetre1)
+    Param2.insert(0,n)
+    Param2.grid()
+    label3 = tk.Label(fenetre1, text="Paramètre T (la valeur du voisinage)").grid()
+    Param3 = tk.Entry(fenetre1)
+    Param3.insert(0,T)
+    Param3.grid()
+    label4 = tk.Label(fenetre1, text="Paramètre k (l'ordre du voisinage de Moore)").grid()
+    Param4 = tk.Entry(fenetre1)
+    Param4.insert(0,k)
+    Param4.grid()
+    valider=tk.Button(fenetre1, text="valider", command=fenetre1.quit).grid()
+    fenetre1.mainloop()
+    p = int(Param1.get())
+    n = int(Param2.get())
+    T = int(Param3.get())
+    k = int(Param4.get())
+    fenetre1.destroy()
+    #valeur_voisinage(k)
+    #generation_suivante()
+    grille(p)
+
 
 def choix_taille():
     """l'utilisateur choisit la taille de la grille"""
     global nb_cases
-    nb_cases = int(input("Choisir le nombre de cases de la grille"))
+    fenetre1 = tk.Tk()
+    label1 = tk.Label(fenetre1, text="Saisir le nombre de colonnes de la grille").grid()
+    cases = tk.Entry(fenetre1)
+    cases.insert(0, nb_cases)
+    cases.grid()
+    valider=tk.Button(fenetre1, text="valider", command=fenetre1.quit).grid()
+    fenetre1.mainloop()
+    nb_cases = int(cases.get())
+    fenetre1.destroy()
     grille(p)
+
 
 def annuler_deplacement():
     """annule le déplacement du personnage"""
@@ -148,8 +185,8 @@ def annuler_deplacement():
 
 def sauvegarde():
     """sauvegarde le terrain généré"""
-    f = tk.filedialop.asksaveasfile()
-    json.dump([CurrentPosition, GrilleTota], f)
+    f = tk.filedialog.asksaveasfile()
+    json.dump([CurrentPosition, GrilleTotal], f)
     f.close()
 
 def recharge():
@@ -163,25 +200,10 @@ def recharge():
     f.close()
     affiche_grille()
 
-def changerP():
-    global p 
-    p = simpledialog.askfloat("Input", "Paramètre p:")
-    grille(p)
 
-def changerN():
-    global n 
-    n = simpledialog.askinteger("Input", "Paramètre n:")
-    grille(p)
-
-def changerT():
-    global T
-    T = simpledialog.askinteger("Input", "Paramètre T:")
-    grille(p)
-
-def changerK():
-    global k
-    k = simpledialog.askinteger("Input", "Paramètre k:")
-    grille(p)
+def creerBouton(text, fonction, i, j):
+    bouton = tk.Button(racine, text=text, command=fonction).grid(row=i, column=j)
+    return bouton
 
 
 #############################################
@@ -199,35 +221,13 @@ grillage.focus_set()
 grille(p)
 b=grillage.find_all()
 
-bouton_gen_suivante = tk.Button(racine, text="Génération suivante", command=generation_suivante)
-bouton_gen_suivante.grid(row=0, column=1)
-
-Taille = tk.Button(racine, text="Taille de la grille", command=choix_taille)
-Taille.grid(row=1, column=1)
-
-Button_retirer= tk.Button(racine, text="Retirer personnage", command=retirer_cercle)
-Button_retirer.grid(row=2, column=1)
-
-bouton_p = tk.Button(racine, text="Changer p", command=changerP)
-bouton_p.grid(row=0, column=2)
-
-bouton_n = tk.Button(racine, text="Changer n", command= changerN)
-bouton_n.grid(row=1, column=2)
-
-bouton_t = tk.Button(racine, text="Changer t", command = changerT)
-bouton_t.grid(row=2, column=2)
-
-bouton_k = tk.Button(racine, text="Changer k", command= changerK)
-bouton_k.grid(row=3, column=2)
-
-bouton_sauvegarder = tk.Button(racine, text="Sauvegarder", command = sauvegarde)
-bouton_sauvegarder.grid(row=0, column=3)
-
-bouton_charger = tk.Button(racine, text="Charger", command=recharge)
-bouton_charger.grid(row=1, column=3)
-
-bouton_retour = tk.Button(racine, text="Retour", command=annuler_deplacement)
-bouton_retour.grid(row=2, column=3)
+bouton_gen_suivante = creerBouton("Génération suivante", generation_suivante, 0, 1)
+Taille = creerBouton("Taille de la grille", choix_taille, 1, 1)
+Parametres = creerBouton("Paramètres", choix_parametres, 3, 1)
+Button_retirer= creerBouton("Retirer personnage", retirer_cercle, 2, 1)
+bouton_sauvegarder = creerBouton("Sauvegarder", sauvegarde, 0, 3)
+bouton_charger = creerBouton("Charger", recharge, 1, 3)
+bouton_retour = creerBouton("Retour", annuler_deplacement, 2, 3)
 
 racine.mainloop()
 #############################################
