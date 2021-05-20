@@ -26,6 +26,7 @@ cpt = 0
 cercle = None
 CurrentPosition = None
 deplacements=[]
+GrilleTotal = [[0 for x in range(nb_cases)] for y in range(nb_cases)]
 
 #############################################
 #definition des variables globales
@@ -34,7 +35,7 @@ deplacements=[]
 
 def grille(cases):
     """génération de la grille"""
-    GrilleTotal = [[0 for x in range(nb_cases)] for y in range(nb_cases)]
+    #GrilleTotal = [[0 for x in range(nb_cases)] for y in range(nb_cases)]
     CG=coulour_gille(cases)
     for i in range(nb_cases):
         for j in range(nb_cases):
@@ -90,25 +91,25 @@ def creerCercle(event):
         pass
                                
 def droite(event):
-    """faire déplacer le cercle à droite sans aller dans la casse eau""" 
+    """faire déplacer le cercle à droite sans aller dans la casse eau"""
     if CurrentPosition[0]+1<nb_cases and GrilleTotal[CurrentPosition[0]+1][CurrentPosition[1]] == 'brown' :
         grillage.move(cercle, WIDTH/nb_cases, 0)
         CurrentPosition[0]+=1
 
 def gauche(event):
-    """faire déplacer le cercle à gauche sans aller dans la casse eau""" 
+    """faire déplacer le cercle à gauche sans aller dans la casse eau"""
     if CurrentPosition[0]-1>=0 and GrilleTotal[CurrentPosition[0]-1][CurrentPosition[1]] == 'brown' :
         grillage.move(cercle, -WIDTH/nb_cases, 0)
         CurrentPosition[0]-=1
 
 def haut(event):
-    """faire déplacer le cercle en haut sans aller dans la casse eau""" 
+    """faire déplacer le cercle en haut sans aller dans la casse eau"""
     if CurrentPosition[1]-1>=0 and GrilleTotal[CurrentPosition[0]][CurrentPosition[1]-1] == 'brown' :
         grillage.move(cercle, 0, -HEIGHT/nb_cases)
         CurrentPosition[1]-=1
 
 def bas(event):
-    """faire déplacer le cercle en bas sans aller dans la casse eau""" 
+    """faire déplacer le cercle en bas sans aller dans la casse eau"""
     if CurrentPosition[1]+1<nb_cases and GrilleTotal[CurrentPosition[0]][CurrentPosition[1]+1] == 'brown' :
         grillage.move(cercle, 0, HEIGHT/nb_cases)
         CurrentPosition[1]+=1  
