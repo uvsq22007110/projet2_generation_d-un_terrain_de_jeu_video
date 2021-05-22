@@ -32,7 +32,6 @@ GrilleTotal = [[0 for x in range(nb_cases)] for y in range(nb_cases)]
 
 def grille(cases):
     """génération de la grille"""
-    #GrilleTotal = [[0 for x in range(nb_cases)] for y in range(nb_cases)]
     CG=coulour_gille(cases)
     for i in range(nb_cases):
         for j in range(nb_cases):
@@ -122,10 +121,10 @@ def retirer_cercle():
     grillage.delete(cercle)
        
 
-def valeur_voisinage(k,grilletotal,x,y):
+def valeur_voisinage(k,grilletotal, x, y):
     """définit la valeur du voisinage"""
     eau = 0
-   
+
     for i in range(-k, k+1):
         for j in range(-k, k+1):
             if ((i != 0 or j != 0) and x+i >=0 and x+i< len(GrilleTotal) and y+j >= 0 and y+j < len(GrilleTotal) and GrilleTotal[x+i][y+j]=="blue"):
@@ -155,19 +154,19 @@ def choix_parametres():
     Param4.grid()
     valider=tk.Button(fenetre1, text="valider", command=fenetre1.quit).grid()
     fenetre1.mainloop()
-    p = int(Param1.get())
+    p = float(Param1.get())
     n = int(Param2.get())
     T = int(Param3.get())
     k = int(Param4.get())
     fenetre1.destroy()
-    #valeur_voisinage(k)
-    #generation_suivante()
-    grille(p)
+    if p != 0.5:
+        grille(p)
+    generation_suivante()
 
 
 def choix_taille():
     """l'utilisateur choisit la taille de la grille"""
-    global nb_cases
+    global nb_cases, GrilleTotal
     fenetre1 = tk.Tk()
     label1 = tk.Label(fenetre1, text="Saisir le nombre de colonnes de la grille").grid()
     cases = tk.Entry(fenetre1)
@@ -177,6 +176,7 @@ def choix_taille():
     fenetre1.mainloop()
     nb_cases = int(cases.get())
     fenetre1.destroy()
+    GrilleTotal = [[0 for x in range(nb_cases)] for y in range(nb_cases)]
     grille(p)
 
 
