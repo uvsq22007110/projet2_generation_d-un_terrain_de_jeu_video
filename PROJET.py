@@ -73,7 +73,7 @@ def generation_suivante():
             GrilleTotal[x][y]=colorr
             cont=cont+1
 
-def activate_automate(n):
+def activate_automate():
     for i in range (n):
         grillage.after(1000, generation_suivante)
 
@@ -234,12 +234,13 @@ grille(p)
 b=grillage.find_all()
 
 bouton_gen_suivante = creerBouton("Génération suivante", generation_suivante, 0, 1)
-Taille = creerBouton("Taille de la grille", choix_taille, 1, 1)
-Parametres = creerBouton("Paramètres", choix_parametres, 3, 1)
-Button_retirer= creerBouton("Retirer personnage", retirer_cercle, 2, 1)
+bouton_taille = creerBouton("Taille de la grille", choix_taille, 1, 1)
+bouton_parametres = creerBouton("Paramètres", choix_parametres, 3, 1)
+bouton_retirer= creerBouton("Retirer personnage", retirer_cercle, 2, 1)
 bouton_sauvegarder = creerBouton("Sauvegarder", sauvegarde, 0, 3)
 bouton_charger = creerBouton("Charger", recharge, 1, 3)
 bouton_retour = creerBouton("Retour", annuler_deplacement, 2, 3)
+bouton_activer = creerBouton("Activer l'automate", activate_automate, 3, 3)
 
 racine.mainloop()
 #############################################
