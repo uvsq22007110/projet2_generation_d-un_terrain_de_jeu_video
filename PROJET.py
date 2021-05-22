@@ -57,7 +57,9 @@ def coulour_gille (p) :
 def generation_suivante():
     """si la valeur du voisinage est supérieur ou égale à T, alors une case reste ou est convertie en eau vice et versa"""
     global GrilleTotal, k, T, p 
+    
     count=1
+    cont=1
     for x in range(len(GrilleTotal)):
         for y in range(len(GrilleTotal)):
             if valeur_voisinage(k,GrilleTotal,x,y) >= T:
@@ -65,6 +67,15 @@ def generation_suivante():
             else:
                 grillage.itemconfigure(count, fill="brown")
             count=count+1
+    for x in range(len(GrilleTotal)):
+        for y in range(len(GrilleTotal)):
+            colorr=grillage.itemcget(cont, 'fill')
+            GrilleTotal[x][y]=colorr
+            cont=cont+1
+
+def activate_automate(n):
+    for i in range (n):
+        grillage.after(1000, generation_suivante)
 
 def creerCercle(event):
     """Dessine un rond jaune"""
