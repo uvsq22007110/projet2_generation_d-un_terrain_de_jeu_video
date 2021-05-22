@@ -13,6 +13,7 @@ from tkinter import simpledialog
 from tkinter import filedialog
 import random as rd
 import json
+import time
 #############################################
 #definition des constantes(M)
 p = 0.5
@@ -44,7 +45,6 @@ def grille(cases):
             CG.remove(colors) 
             case = grillage.create_rectangle((pos1x, pos1y), (pos2x, pos2y), fill = colors)
 
-
 def coulour_gille (p) :
     """ crée une list de 2500 elements remplit de blue et brown pour générer notre terrain """
     nombre_eau=nb_cases*nb_cases*p
@@ -57,7 +57,7 @@ def coulour_gille (p) :
 def generation_suivante():
     """si la valeur du voisinage est supérieur ou égale à T, alors une case reste ou est convertie en eau vice et versa"""
     global GrilleTotal, k, T, p 
-    
+
     count=1
     cont=1
     for x in range(len(GrilleTotal)):
@@ -72,11 +72,13 @@ def generation_suivante():
             colorr=grillage.itemcget(cont, 'fill')
             GrilleTotal[x][y]=colorr
             cont=cont+1
-
+    
 def activate_automate():
+    """répéte n fois l'automate"""
+    time=500
     for i in range (n):
-        grillage.after(1000, generation_suivante)
-
+        grillage.after(time, generation_suivante)
+        time = time + 1000
 def creerCercle(event):
     """Dessine un rond jaune"""
     global nb_cases, cpt, cercle, CurrentPosition
@@ -233,14 +235,14 @@ grillage.focus_set()
 grille(p)
 b=grillage.find_all()
 
-bouton_gen_suivante = creerBouton("Génération suivante", generation_suivante, 0, 1)
+bouton_gen_suivante = creerBouton("Génération suivante", generation_suivante, 3, 3)
 bouton_taille = creerBouton("Taille de la grille", choix_taille, 1, 1)
 bouton_parametres = creerBouton("Paramètres", choix_parametres, 3, 1)
 bouton_retirer= creerBouton("Retirer personnage", retirer_cercle, 2, 1)
 bouton_sauvegarder = creerBouton("Sauvegarder", sauvegarde, 0, 3)
 bouton_charger = creerBouton("Charger", recharge, 1, 3)
 bouton_retour = creerBouton("Retour", annuler_deplacement, 2, 3)
-bouton_activer = creerBouton("Activer l'automate", activate_automate, 3, 3)
+bouton_activer = creerBouton("Activer l'automate", activate_automate, 0, 1)
 
 racine.mainloop()
 #############################################
