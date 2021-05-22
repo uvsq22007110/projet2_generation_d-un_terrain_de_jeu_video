@@ -91,28 +91,41 @@ def creerCercle(event):
         pass
                                
 def droite(event):
-    """faire déplacer le cercle à droite sans aller dans la casse eau"""
+    """faire déplacer le cercle à droite sans aller dans la casse eau"""  
+    global deplacements
     if CurrentPosition[0]+1<nb_cases and GrilleTotal[CurrentPosition[0]+1][CurrentPosition[1]] == 'brown' :
         grillage.move(cercle, WIDTH/nb_cases, 0)
         CurrentPosition[0]+=1
+        if event!=None:
+            deplacements.append(gauche)
 
 def gauche(event):
     """faire déplacer le cercle à gauche sans aller dans la casse eau"""
+    global deplacements
     if CurrentPosition[0]-1>=0 and GrilleTotal[CurrentPosition[0]-1][CurrentPosition[1]] == 'brown' :
         grillage.move(cercle, -WIDTH/nb_cases, 0)
         CurrentPosition[0]-=1
+        if event !=None:
+            deplacements.append(droite)
+
 
 def haut(event):
     """faire déplacer le cercle en haut sans aller dans la casse eau"""
+    global deplacements
     if CurrentPosition[1]-1>=0 and GrilleTotal[CurrentPosition[0]][CurrentPosition[1]-1] == 'brown' :
         grillage.move(cercle, 0, -HEIGHT/nb_cases)
         CurrentPosition[1]-=1
+        if event != None:
+            deplacements.append(bas)
 
 def bas(event):
     """faire déplacer le cercle en bas sans aller dans la casse eau"""
+    global deplacements
     if CurrentPosition[1]+1<nb_cases and GrilleTotal[CurrentPosition[0]][CurrentPosition[1]+1] == 'brown' :
         grillage.move(cercle, 0, HEIGHT/nb_cases)
         CurrentPosition[1]+=1  
+        if event != None:
+            deplacements.append(haut)
 
 def retirer_cercle():
     " fonction qui permet de retirer le cercle et lorqu'on clique sur une autre case terre le cercle se replace"
