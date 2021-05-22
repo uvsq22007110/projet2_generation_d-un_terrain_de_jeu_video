@@ -27,7 +27,6 @@ cercle = None
 CurrentPosition = None
 deplacements=[]
 GrilleTotal = [[0 for x in range(nb_cases)] for y in range(nb_cases)]
-
 #############################################
 #definition des fonctions
 
@@ -67,7 +66,7 @@ def generation_suivante():
             else:
                 grillage.itemconfigure(count, fill="brown")
             count=count+1
-            
+
 def creerCercle(event):
     """Dessine un rond jaune"""
     global nb_cases, cpt, cercle, CurrentPosition
