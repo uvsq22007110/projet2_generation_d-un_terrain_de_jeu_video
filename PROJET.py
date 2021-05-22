@@ -29,8 +29,6 @@ deplacements=[]
 GrilleTotal = [[0 for x in range(nb_cases)] for y in range(nb_cases)]
 
 #############################################
-#definition des variables globales
-#############################################
 #definition des fonctions
 
 def grille(cases):
@@ -61,25 +59,19 @@ def coulour_gille (p) :
 def generation_suivante():
     """si la valeur du voisinage est supérieur ou égale à T, alors une case reste ou est convertie en eau vice et versa"""
     global GrilleTotal, k, T, p 
+    count=1
     for x in range(len(GrilleTotal)):
         for y in range(len(GrilleTotal)):
-            if valeur_voisinage(GrilleTotal) >= T:
-                GrilleTotal[x][y]="blue"
+            if valeur_voisinage(k,GrilleTotal,x,y) >= T:
+                grillage.itemconfigure(count, fill="blue") 
             else:
-                GrilleTotal[x][y]="brown"
-    affiche_grille()
-
-
-def voisin(T):
-    """si la valeur du voisinage est supérieure ou égale à T, alors une case reste ou est convertie en eau et vice vers ca"""
-    pass
-
+                grillage.itemconfigure(count, fill="brown")
+            count=count+1
+            
 def creerCercle(event):
     """Dessine un rond jaune"""
-    global cpt
-    global cercle
-    global CurrentPosition
-    rayon = 5
+    global nb_cases, cpt, cercle, CurrentPosition
+    rayon = - 0.375*nb_cases+23.75
     if cpt ==0:
         x = (event.x//(WIDTH/nb_cases))*(WIDTH/nb_cases) + (WIDTH/nb_cases)/2
         y = (event.y//(HEIGHT/nb_cases))*(HEIGHT/nb_cases) + (HEIGHT/nb_cases)/2
@@ -87,8 +79,6 @@ def creerCercle(event):
         if GrilleTotal[CurrentPosition[0]][CurrentPosition[1]]!="blue": 
             cercle = grillage.create_oval((x-rayon, y-rayon), (x+rayon, y+rayon), fill="yellow")
             cpt+=1
-    else:
-        pass
                                
 def droite(event):
     """faire déplacer le cercle à droite sans aller dans la casse eau"""  
@@ -107,7 +97,6 @@ def gauche(event):
         CurrentPosition[0]-=1
         if event !=None:
             deplacements.append(droite)
-
 
 def haut(event):
     """faire déplacer le cercle en haut sans aller dans la casse eau"""
@@ -134,13 +123,15 @@ def retirer_cercle():
     grillage.delete(cercle)
        
 
-def valeur_voisinage(k):
+def valeur_voisinage(k,grilletotal,x,y):
     """définit la valeur du voisinage"""
     eau = 0
+   
     for i in range(-k, k+1):
         for j in range(-k, k+1):
-            if ((i != 0 or j != 0) and x+i >=0 and x+i< len(grille) and y+j >= 0 and y+j < len(grille) and grille[x+i][y+j]=="blue"):
-                eau = eau + 1 
+            if ((i != 0 or j != 0) and x+i >=0 and x+i< len(GrilleTotal) and y+j >= 0 and y+j < len(GrilleTotal) and GrilleTotal[x+i][y+j]=="blue"):
+                eau = eau + 1
+                
     return eau
 
 def choix_parametres():
@@ -214,12 +205,9 @@ def recharge():
     f.close()
     affiche_grille()
 
-
 def creerBouton(text, fonction, i, j):
     bouton = tk.Button(racine, text=text, command=fonction).grid(row=i, column=j)
     return bouton
-
-
 #############################################
 #programme principal
 racine = tk.Tk()
