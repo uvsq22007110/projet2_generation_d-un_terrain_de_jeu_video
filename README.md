@@ -7,6 +7,8 @@ Dans ce programme le personnage est représenté par un cercle de couleur jaune.
 
 Pour permettre le déplacement du personnage, il suffit d'utiliser les flèches du clavier qui sont définies par: def haut(event), def bas(event), def droite(event), def gauche (event).
 
+pour obtenir un cercle de taille aproprié a la taille de la grille on a pris l'equation y = ax + b on a definit une valeur de cercle adequate et on a remplacer les valeurs dans l'equation.
+
 Partie Bouton:
 
 Le bouton " Retirer personnage ", sert à retirer le cercle de la grille,ainsi le cercle placé sur une case terre va être retiré. Une fois retiré vous devez cliquer à un autre endroit dans la grille plus précisément sur une case terre et le cercle réapparaîtra. 
@@ -20,3 +22,11 @@ Le bouton "Sauvegarder" permet de sauvegarder le jeu dans notre ordinateur.
 Le bouton " Charger" permet de récupérer le jeu sauvegardé dans notre ordinateur, pour continuer à jouer dessus.
 
 Le bouton " Paramètres" permet de modifier les paramètres de la grille : p (la probabilité d'avoir une case eau), n (nombre de fois où l'automate va se répéter), T (le nombre de cases eau voisins qui vont définir le type (eau/terre) de la case centrale) et k (l'ordre du voisinage de Moore).
+
+le bouton "génération suivante" permet de changer les couleurs des cases en fonction des parametres T, k 
+
+le bouton "activer automate" permet de répèter n fois l’automate
+
+REMARQUE:
+
+les boutons génération suivante et activer l'automate ne marche pas quand on change la taille de la grille
