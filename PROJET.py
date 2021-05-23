@@ -15,7 +15,7 @@ import random as rd
 import json
 import time
 #############################################
-#definition des constantes(M)
+#definition des variables
 p = 0.5
 n = 4
 T = 5
@@ -46,7 +46,7 @@ def grille(cases):
             case = grillage.create_rectangle((pos1x, pos1y), (pos2x, pos2y), fill = colors)
 
 def coulour_gille (p) :
-    """ crée une list de 2500 elements remplit de blue et brown pour générer notre terrain """
+    """ crée une list de nb_cases*nb_cases elements remplit de blue et brown pour générer notre terrain """
     nombre_eau=nb_cases*nb_cases*p
     nombre_terre=(nb_cases*nb_cases)-nombre_eau
     Lbleu=["blue"]*int(nombre_eau)
@@ -54,10 +54,18 @@ def coulour_gille (p) :
     Lcolors=Lbleu+Lbrown
     return Lcolors
 
+def valeur_voisinage(k,grilletotal, x, y):
+    """définit la valeur du voisinage"""
+    eau = 0
+    for i in range(-k, k+1):
+        for j in range(-k, k+1):
+            if ((i != 0 or j != 0) and x+i >=0 and x+i< len(GrilleTotal) and y+j >= 0 and y+j < len(GrilleTotal) and GrilleTotal[x+i][y+j]=="blue"):
+                eau = eau + 1
+    return eau
+
 def generation_suivante():
     """si la valeur du voisinage est supérieur ou égale à T, alors une case reste ou est convertie en eau vice et versa"""
     global GrilleTotal, k, T, p 
-
     count=1
     cont=1
     for x in range(len(GrilleTotal)):
@@ -79,6 +87,7 @@ def activate_automate():
     for i in range (n):
         grillage.after(time, generation_suivante)
         time = time + 1000
+
 def creerCercle(event):
     """Dessine un rond jaune"""
     global nb_cases, cpt, cercle, CurrentPosition
@@ -127,23 +136,18 @@ def bas(event):
         if event != None:
             deplacements.append(haut)
 
+def annuler_deplacement():
+    """annule le déplacement du personnage"""
+    global deplacements
+    if cpt == 1 and len(deplacements)>0:
+        f= deplacements.pop()
+        f(None)
+
 def retirer_cercle():
     " fonction qui permet de retirer le cercle et lorqu'on clique sur une autre case terre le cercle se replace"
     global cercle, cpt 
     cpt = 0
     grillage.delete(cercle)
-       
-
-def valeur_voisinage(k,grilletotal, x, y):
-    """définit la valeur du voisinage"""
-    eau = 0
-
-    for i in range(-k, k+1):
-        for j in range(-k, k+1):
-            if ((i != 0 or j != 0) and x+i >=0 and x+i< len(GrilleTotal) and y+j >= 0 and y+j < len(GrilleTotal) and GrilleTotal[x+i][y+j]=="blue"):
-                eau = eau + 1
-                
-    return eau
 
 def choix_parametres():
     """l'utilisateur choisit les paramètres, k, p, n, T"""
@@ -174,8 +178,7 @@ def choix_parametres():
     fenetre1.destroy()
     if p != 0.5:
         grille(p)
-    generation_suivante()
-
+    activate_automate()
 
 def choix_taille():
     """l'utilisateur choisit la taille de la grille"""
@@ -191,14 +194,6 @@ def choix_taille():
     fenetre1.destroy()
     GrilleTotal = [[0 for x in range(nb_cases)] for y in range(nb_cases)]
     grille(p)
-
-
-def annuler_deplacement():
-    """annule le déplacement du personnage"""
-    global deplacements
-    if cpt == 1 and len(deplacements)>0:
-        f= deplacements.pop()
-        f(None)
 
 def sauvegarde():
     """sauvegarde le terrain généré"""
@@ -220,6 +215,7 @@ def recharge():
 def creerBouton(text, fonction, i, j):
     bouton = tk.Button(racine, text=text, command=fonction).grid(row=i, column=j)
     return bouton
+
 #############################################
 #programme principal
 racine = tk.Tk()
