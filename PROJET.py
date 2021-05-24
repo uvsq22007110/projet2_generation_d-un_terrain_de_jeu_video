@@ -224,7 +224,6 @@ def recharge():
     GrilleTotal = r[1]
     nb_cases = len(GrilleTotal)
     f.close()
-    affiche_grille()
 
 
 def creerBouton(text, fonction, i, j):
