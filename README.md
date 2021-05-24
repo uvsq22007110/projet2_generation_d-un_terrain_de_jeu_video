@@ -3,7 +3,7 @@ Notre programme est un générateur de terrain.
 
 Partie personnage:
 
-Dans ce programme le personnage est représenté par un cercle de couleur jaune. On peut placer le cercle n'importe où et seulement sur une case terre.
+Dans ce programme, le personnage est représenté par un cercle de couleur jaune. On peut placer le cercle n'importe où et seulement sur une case terre.
 
 Pour permettre le déplacement du personnage, il suffit d'utiliser les flèches du clavier qui sont définies par: def haut(event), def bas(event), def droite(event), def gauche (event).
 
