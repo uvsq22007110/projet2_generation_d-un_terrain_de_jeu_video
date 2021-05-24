@@ -30,4 +30,5 @@ Le bouton "activer automate" permet de répèter n fois l’automate
 REMARQUE:
 
 Les boutons génération suivante et activer l'automate ne marche pas quand on change la taille de la grille
+
 Le bouton "charger" ne fontionne pas, dans l'état actuel du code il est donc impossible de récupérer un terrain sauvegarder.
